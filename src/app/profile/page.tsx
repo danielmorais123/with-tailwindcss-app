@@ -1,11 +1,10 @@
-import { Poppins, Russo_One } from "next/font/google";
+"use server";
+
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
-const russo = Poppins({ subsets: ["latin"], weight: "400" });
-
-export default async function Home() {
+export default async function Page() {
   const supabase = createServerComponentClient({ cookies });
   const {
     data: { session },
@@ -14,6 +13,5 @@ export default async function Home() {
   if (!session) {
     redirect("/auth/login");
   }
-  //bg-[#4153ef]
-  return <p>Home Page</p>;
+  return <p>Profile Page</p>;
 }

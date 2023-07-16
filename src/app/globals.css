@@ -1,7 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+@import url("https://fonts.googleapis.com/css2?family=Poppins&family=Roboto&family=Roboto+Mono&family=Rowdies:wght@700&display=swap");
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
@@ -24,4 +24,20 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
+}
+
+.dark-theme {
+  @apply !bg-[#242427] text-white;
+}
+
+.light-theme {
+  @apply !bg-white text-[#242427];
+}
+
+.rowdies-font {
+  font-family: "Rowdies", cursive !important;
+  font-weight: bold !important;
+}
+.font-poppins {
+  font-family: "Poppins", sans-serif !important;
 }
