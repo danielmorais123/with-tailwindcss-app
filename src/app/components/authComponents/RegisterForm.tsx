@@ -2,18 +2,18 @@
 
 import { useState } from "react";
 import { Checkbox, Input, Typography } from "@material-tailwind/react";
-import SocialLoginButton from "./SocialLoginButton";
+import SocialLoginButton from "../SocialLoginButton";
 import {
   faGoogle,
   faApple,
   faFacebook,
 } from "@fortawesome/free-brands-svg-icons";
 import { ArrowRightIcon } from "@chakra-ui/icons";
-import { handleSignUp } from "../actions/auth";
+import { handleSignUp } from "../../actions/auth";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useRouter } from "next/navigation";
 
-export default function SignForm() {
+export default function RegisterForm() {
   const [username, setUsername] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -24,6 +24,13 @@ export default function SignForm() {
 
   const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (password.length < 8) {
+      setError("Password must be at least 8 characters");
+    }
+    if (password !== passwordConfirm) {
+      setError("The password must match");
+      return;
+    }
     await supabase.auth.signUp({
       email,
       password,
@@ -33,71 +40,40 @@ export default function SignForm() {
     });
     fetch(`/api/auth/register`, {
       method: "POST",
-      /* @ts-ignore */
+
       body: JSON.stringify({
         email,
         name: username,
-        password,
-        passwordConfirm,
       }),
-    });
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (!data.error) {
+          router.push("/");
+          router.refresh();
+        } else {
+          setError(data.message);
+        }
+      });
   };
-
-  const handleSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-    router.push("/");
-    router.refresh();
-  };
-
-  // const register = async () => {
-  //   console.log("Register");
-  //   // if (password.length < 8) {
-  //   //   setError("Password must be at least 8 characters");
-  //   // }
-  //   // if (password !== passwordConfirm) {
-  //   //   setError("The password must match");
-  //   //   return;
-  //   // }
-
-  //   const aws = await fetch(`/api/auth/register`, {
-  //     method: "POST",
-  //     /* @ts-ignore */
-  //     body: JSON.stringify({
-  //       email,
-  //       name: username,
-  //       password,
-  //       passwordConfirm,
-  //     }),
-  //   });
-
-  //   const resposne = await aws.json();
-  //   console.log({ resposne });
-  // };
-  const logInWithGoogle = () => {};
-
-  const logInWithFacebook = () => {};
-
-  const logInWithApple = () => {};
 
   return (
     <>
-      <form className="mt-8 mb-2" onSubmit={handleSignIn}>
+      <form className="mt-8 mb-2" onSubmit={handleSignUp}>
         <div className="mb-4 flex flex-col gap-4">
           <Input
             label="Username"
             name="username"
             className="bg-white w-full"
             value={username}
+            autoComplete="off"
             onChange={(e) => setUsername(e.target.value)}
           />
           <Input
             label="Email"
             name="email"
             type="email"
+            autoComplete="off"
             className="bg-white w-full"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -105,6 +81,7 @@ export default function SignForm() {
           <Input
             type="password"
             name="password"
+            autoComplete="off"
             label="Password"
             className="bg-white w-full"
             value={password}
@@ -115,6 +92,7 @@ export default function SignForm() {
               type="password"
               name="confirmPassword"
               label="Confirm Password"
+              autoComplete="off"
               className="bg-white w-full"
               value={passwordConfirm}
               onChange={(e) => setPasswordConfirm(e.target.value)}
@@ -153,7 +131,7 @@ export default function SignForm() {
         <p className="mt-4 text-center font-normal text-sm">
           Already have an account?{" "}
           <a
-            href="#"
+            href="/auth/login"
             className="font-medium text-blue-500 transition-colors hover:text-blue-700"
           >
             Sign In
@@ -168,19 +146,11 @@ export default function SignForm() {
         <hr className="w-1/2" />
       </div>
       <div className="flex justify-center space-x-2">
-        <SocialLoginButton
-          icon={faGoogle}
-          onClick={logInWithGoogle}
-          name="google"
-        />
-        <SocialLoginButton
-          icon={faApple}
-          onClick={logInWithApple}
-          name="apple"
-        />
+        <SocialLoginButton icon={faGoogle} onClick={() => {}} name="google" />
+        <SocialLoginButton icon={faApple} onClick={() => {}} name="apple" />
         <SocialLoginButton
           icon={faFacebook}
-          onClick={logInWithFacebook}
+          onClick={() => {}}
           name="facebook"
         />
       </div>

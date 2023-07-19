@@ -1,7 +1,7 @@
 "use client";
 
-import CarouselComponent from "./CarouselComponent";
-import SignForm from "./SignForm";
+import CarouselComponent from "../CarouselComponent";
+import RegisterForm from "./RegisterForm";
 
 export default function RegisterPageComponent() {
   return (
@@ -22,7 +22,7 @@ export default function RegisterPageComponent() {
             <p className="text-center text-sm mt-1 text-[#6a6b70]">
               It's easy and free
             </p>
-            <SignForm />
+            <RegisterForm />
           </div>
         </div>
       </div>

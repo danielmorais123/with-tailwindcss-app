@@ -1,4 +1,4 @@
-import RegisterPageComponent from "@/app/components/RegisterPageComponent";
+import RegisterPageComponent from "@/app/components/authComponents/RegisterPageComponent";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";

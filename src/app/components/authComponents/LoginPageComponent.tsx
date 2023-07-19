@@ -1,6 +1,6 @@
 "use client";
-import CarouselComponent from "./CarouselComponent";
-import SignForm from "./SignForm";
+import CarouselComponent from "../CarouselComponent";
+import LoginForm from "./LoginForm";
 
 export default function LoginPageComponent() {
   return (
@@ -14,14 +14,14 @@ export default function LoginPageComponent() {
       </div>
       <div className="w-1/2 h-full bg-[#e6ecf5] flex items-center justify-start">
         <div className="h-[80%] w-[92%] bg-[#ffffff] rounded-r-3xl flex items-center justify-center">
-          <div className="bg-[#f7fafc] px-4 py-8 text-black rounded-2xl max-w-[380px]">
+          <div className="bg-[#f7fafc] px-4 py-8 text-black rounded-2xl w-[380px]">
             <p className="font-bold text-center mt-2 text-xl tracking-wide">
               Create your account
             </p>
             <p className="text-center text-sm mt-1 text-[#6a6b70]">
               It's easy and free
             </p>
-            <SignForm />
+            <LoginForm />
           </div>
         </div>
       </div>

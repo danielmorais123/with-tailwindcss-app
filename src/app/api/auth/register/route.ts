@@ -6,7 +6,7 @@ import { revalidatePath } from 'next/cache';
 
 export async function POST(request: Request) {
     let payload = await request.json()
-    const { email, name, password, passwordConfirm } = payload
+    const { email, name } = payload
 
 
     const user = await prisma.user.findFirst({

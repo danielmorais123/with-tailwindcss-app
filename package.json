@@ -40,6 +40,7 @@
   },
   "devDependencies": {
     "prisma": "^4.15.0",
+    "tailwind-scrollbar": "^3.0.4",
     "ts-node": "^10.9.1"
   }
 }
